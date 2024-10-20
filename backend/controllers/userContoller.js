@@ -2,7 +2,6 @@ import userModel from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import validator from "validator";
-import { useReducer } from "react";
 
 // login user
 const loginUser = async (req, res) => {
@@ -36,13 +35,13 @@ const createToken = (id) => {
 const registerUser = async (req, res) => {
   const { name, password, email } = req.body;
   try {
-    // checking is user already exists
+    // checking if user already exists
     const exists = await userModel.findOne({ email });
     if (exists) {
-      return res.json({ success: false, message: "user alredy exists" });
+      return res.json({ success: false, message: "User already exists" });
     }
 
-    // validating email format $ strong password
+    // validating email format & strong password
     if (!validator.isEmail(email)) {
       return res.json({
         success: false,
@@ -53,12 +52,11 @@ const registerUser = async (req, res) => {
     if (password.length < 8) {
       return res.json({
         success: false,
-        message: "Plese enter a stong password",
+        message: "Please enter a strong password",
       });
     }
 
-    // to encrpt the password we use bycrpt package
-    // hashing user password
+    // encrypting the password using bcrypt
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -67,7 +65,7 @@ const registerUser = async (req, res) => {
       email: email,
       password: hashedPassword,
     });
-    // this help me to save info in the data base
+    // save info in the database
     const user = await newUser.save();
     // generate token
     const token = createToken(user._id);
