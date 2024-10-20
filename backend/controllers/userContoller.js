@@ -56,7 +56,11 @@ const registerUser = async (req, res) => {
       });
     }
 
+<<<<<<< HEAD
     // encrypting the password using bcryptjs
+=======
+    // encrypting the password using bcrypt
+>>>>>>> 9a41d83846fc871a84211b49d67459fe1ce4a7fc
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
