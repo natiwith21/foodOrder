@@ -40,4 +40,3 @@ app.listen(port, () => {
   console.log(`Server started on http://localhost:${port}`);
 });
 
-//mongodb+srv://natnaelabiy88:fenet@cluster0.vqrc8.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
